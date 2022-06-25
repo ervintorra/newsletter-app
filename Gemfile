@@ -64,6 +64,8 @@ group :development, :test do
   gem "faker"
   gem 'shoulda-matchers'
   gem 'database_cleaner-active_record'
+  gem 'rails-controller-testing'
+
   gem 'pry', '~> 0.13.1'
   gem 'pry-rails'
   gem 'pry-byebug', '~> 3.6'

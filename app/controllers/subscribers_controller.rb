@@ -2,23 +2,18 @@ class SubscribersController < ApplicationController
   before_action :set_subscriber, only: %i[show edit update destroy]
   before_action :authenticate_user!, except: :confirm
 
-  # GET /subscribers or /subscribers.json
   def index
     @subscribers = Subscriber.all
   end
 
-  # GET /subscribers/1 or /subscribers/1.json
   def show; end
 
-  # GET /subscribers/new
   def new
     @subscriber = Subscriber.new
   end
 
-  # GET /subscribers/1/edit
   def edit; end
 
-  # POST /subscribers or /subscribers.json
   def create
     create_resp = SubscriberServices::CreateSubscriber.call(subscriber_params)
     @subscriber = create_resp.resource
@@ -32,7 +27,6 @@ class SubscribersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /subscribers/1 or /subscribers/1.json
   def update
     respond_to do |format|
       if @subscriber.update(subscriber_params)

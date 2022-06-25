@@ -12,7 +12,7 @@ class HomeController < ApplicationController
       else
         @subscriber = sub_user_resp.resource
         flash[:alert] = sub_user_resp.message if sub_user_resp.message
-        format.html { render :page, status: :unprocessable_entity  }
+        format.html { render :page, status: :unprocessable_entity }
       end
     end
   end
