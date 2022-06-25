@@ -4,7 +4,8 @@ class Newsletter < ApplicationRecord
 
   belongs_to :user
 
-  validates :publish_at, comparison: { greater_than: MINIMUM_TIME_TO_SCHEDULE_NEWSLETTER }, if: -> { publish_at_changed? }
+  validates :publish_at, comparison: { greater_than: MINIMUM_TIME_TO_SCHEDULE_NEWSLETTER },
+                         if: -> { publish_at.to_s != publish_at_was.to_s }
   validates :title, presence: true
   validates :body, presence: true
 
@@ -35,19 +36,19 @@ class Newsletter < ApplicationRecord
   end
 
   def scheduled?
-    scheduled == true && not_rescheduled?
-  end
-
-  def not_rescheduled?
-    publish_at <= Time.current
+    scheduled == true
   end
 
   def publish_in_future?
     publish_at >= Time.current
   end
 
+  def not_rescheduled?
+    publish_at <= Time.current
+  end
+
   def ready_to_publish?
-    scheduled?
+    scheduled? && not_rescheduled?
   end
 
   def reschedule
