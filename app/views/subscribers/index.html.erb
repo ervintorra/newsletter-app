@@ -1,0 +1,32 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Subscribers</h1>
+
+<%= link_to "New subscriber", new_subscriber_path, class: 'btn btn-primary' %>
+
+<table class="table table-sm">
+  <thead>
+  <tr>
+    <th scope="col">Name</th>
+    <th scope="col">Email</th>
+    <th scope="col">Source</th>
+    <th scope="col">Confirmed</th>
+    <th scope="col">Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @subscribers.each do |subscriber| %>
+    <tr>
+      <th scope="row"><%= subscriber.name %></th>
+      <td><%= subscriber.email %></td>
+      <td><%= subscriber.source %></td>
+      <td><%= subscriber.confirmed? %></td>
+      <td width="20%" class="d-flex">
+        <%= link_to "View", subscriber, class: 'btn btn-info', style: 'margin-right: 5px;' %>
+        <%= link_to "Edit", edit_subscriber_path(subscriber), class: 'btn btn-primary', style: 'margin-right: 5px;' %>
+        <%= button_to "Destroy", subscriber_path(subscriber), method: :delete, class: 'btn btn-danger', form: { data: { turbo_confirm: 'Are you sure?' }} %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

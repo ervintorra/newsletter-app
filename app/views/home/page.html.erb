@@ -1,0 +1,30 @@
+<% content_for :stylesheets do %>
+    <%= stylesheet_link_tag 'home' %>
+<% end %>
+
+<section class="home-newsletter">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="single">
+          <h2>Subscribe to our Newsletter</h2>
+          <%= form_with(model: @subscriber, url: subscribe_user_path) do |form| %>
+            <% if @subscriber.errors.any? %>
+              <div class="input-group">
+                <% @subscriber.errors.each do |error| %>
+                  <p class="text-white"><%= error.full_message %></p>
+                <% end %>
+              </div>
+            <% end %>
+            <div class="input-group">
+              <%= form.text_field :email, class: 'form-control', placeholder: 'Enter your email' %>
+              <span class="input-group-btn">
+                <%= form.submit 'Subscribe', class: 'btn btn-theme' %>
+             </span>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

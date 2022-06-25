@@ -1,0 +1,13 @@
+default: &default
+  check_for_newsletters_to_schedule:
+    class: CheckForNewslettersToScheduleJob
+    every: '5 minutes'
+
+development:
+  <<: *default
+
+staging:
+  <<: *default
+
+production:
+  <<: *default

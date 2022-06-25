@@ -1,0 +1,35 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <%= link_to 'Newsletter Sending System', root_path, class: 'navbar-brand' %>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <% if user_signed_in? %>
+        <li class="nav-item">
+          <%= link_to 'Subscribers', subscribers_path, class: "nav-link #{active_class_for_navbar(subscribers_path)}" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'Newsletters', newsletters_path, class: "nav-link #{active_class_for_navbar(newsletters_path)}" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'Sidekiq UI', sidekiq_web_path, class: 'nav-link' %>
+        </li>
+        <% end %>
+      </ul>
+      <span class="navbar-text">
+        <% if user_signed_in? %>
+        <%= button_to(
+                "Log Out",
+                destroy_user_session_path,
+                method: :delete,
+                class: 'btn btn-danger'
+              ) %>
+        <% else %>
+          <%= link_to 'Sign In', new_user_session_path, class: 'btn btn-info' %>
+        <% end %>
+      </span>
+    </div>
+  </div>
+</nav>
