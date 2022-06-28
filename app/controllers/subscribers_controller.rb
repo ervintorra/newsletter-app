@@ -28,10 +28,13 @@ class SubscribersController < ApplicationController
   end
 
   def update
+    update_resp = SubscriberServices::UpdateSubscriber.call(@subscriber, subscriber_params)
+
     respond_to do |format|
-      if @subscriber.update(subscriber_params)
-        format.html { redirect_to subscriber_url(@subscriber), notice: 'Subscriber was successfully updated.' }
+      if update_resp.success?
+        format.html { redirect_to subscribers_path, notice: update_resp.message }
       else
+        @subscriber = update_resp.resource
         format.html { render :edit, status: :unprocessable_entity }
       end
     end

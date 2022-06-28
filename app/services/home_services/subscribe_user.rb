@@ -11,17 +11,9 @@ module HomeServices
     def execute
       @subscriber = Subscriber.new(@subscriber_params)
 
-      if @subscriber.valid?
-        email_validator = EmailValidator.validate_email(@subscriber.email)
-
-        return unsuccess_response(resource: @subscriber, message: email_validator) unless email_validator.success?
-
-        deliverability = JSON.parse(email_validator.response.body)['deliverability']
-
-        if deliverability == 'UNDELIVERABLE'
-          return unsuccess_response(resource: @subscriber, message: 'Email is not valid.')
-        end
-
+      email_validator_resp = SubscriberServices::ValidateSubscriberEmail.call(@subscriber)
+      unless email_validator_resp.success?
+        return unsuccess_response(resource: email_validator_resp.resource, message: email_validator_resp.message)
       end
 
       if @subscriber.save

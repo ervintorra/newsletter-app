@@ -3,7 +3,7 @@ class Subscriber < ApplicationRecord
 
   validates :email, presence: true, uniqueness: true
 
-  after_create_commit :confirm
+  after_create_commit :send_confirmation_instructions
 
   scope :confirmed, lambda {
     where.not(confirmed_at: nil)
@@ -25,9 +25,15 @@ class Subscriber < ApplicationRecord
     save
   end
 
-  def confirm
+  def send_confirmation_instructions
     return if confirmed?
 
+    generate_confirmation_token
+    send_confirmation_email
+  end
+
+  def resend_send_confirmation_instructions
+    self.confirmed_at = nil
     generate_confirmation_token
     send_confirmation_email
   end

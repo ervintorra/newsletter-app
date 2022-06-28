@@ -35,3 +35,8 @@ en:
   flash_message:
     failed_sending_email_error_message: " Failed sending email to %{email}."
 
+  subscribers:
+    invalid_email_error_message: "Email is not valid."
+    created_success_message: "Subscriber was successfully created."
+    updated_success_message: "Subscriber was successfully updated."
+
