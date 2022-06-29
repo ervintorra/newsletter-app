@@ -40,3 +40,6 @@ en:
     created_success_message: "Subscriber was successfully created."
     updated_success_message: "Subscriber was successfully updated."
 
+  home:
+    subscriber_created_success_confirm_email_message: "You will receive an email to confirm subscription."
+

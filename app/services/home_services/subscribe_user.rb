@@ -17,7 +17,7 @@ module HomeServices
       end
 
       if @subscriber.save
-        success_response(resource: @subscriber, message: 'You will receive an email to confirm subscription.')
+        success_response(resource: @subscriber, message: I18n.t('home.subscriber_created_success_confirm_email_message'))
       else
         unsuccess_response(resource: @subscriber)
       end

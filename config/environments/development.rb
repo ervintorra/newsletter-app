@@ -61,12 +61,13 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
+  config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: "smtp.gmail.com",
-    # domain: 'gmail.com',
+    address: Rails.application.credentials.EMAIL_ADDRESS,
+    domain: Rails.application.credentials.EMAIL_DOMAIN,
     port: 587,
-    user_name: "example@example.com",
-    password: "example",
+    user_name: Rails.application.credentials.EMAIL_USERNAME,
+    password: Rails.application.credentials.EMAIL_PASSWORD,
     authentication: 'plain',
     enable_starttls_auto: true,
     openssl_verify_mode: 'none'

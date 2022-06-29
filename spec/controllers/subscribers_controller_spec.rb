@@ -63,7 +63,7 @@ RSpec.describe SubscribersController, type: :controller do
         end
 
         it { expect(response).to have_http_status(:redirect) }
-        it { expect(response).to redirect_to(subscriber_url(subscriber)) }
+        it { expect(response).to redirect_to(subscribers_path) }
         it { expect(assigns(:subscriber)).to eq(subscriber) }
         it { expect(flash[:notice]).to eq('Subscriber was successfully created.') }
       end
@@ -81,7 +81,7 @@ RSpec.describe SubscribersController, type: :controller do
         end
 
         it { expect(response).to have_http_status(:redirect) }
-        it { expect(response).to redirect_to(subscriber_url(subscriber)) }
+        it { expect(response).to redirect_to(subscribers_path) }
         it { expect(assigns(:subscriber)).to eq(subscriber) }
         it { expect(flash[:notice]).to eq('Subscriber was successfully updated.') }
       end

@@ -18,13 +18,13 @@ RSpec.describe HomeController, type: :controller do
     context 'Valid data' do
       before do
         allow(HomeServices::SubscribeUser).to receive(:call).and_return(
-          ServiceResponse.new(success: true, message: 'You will receive an email to confirm subscription.')
+          ServiceResponse.new(success: true, message: I18n.t('home.subscriber_created_success_confirm_email_message'))
         )
         post :subscribe_user, params: { subscriber: subscriber.attributes.slice('email') }
       end
       it { expect(response).to have_http_status(:redirect) }
       it { expect(response).to redirect_to(root_path) }
-      it { expect(flash[:notice]).to eq('You will receive an email to confirm subscription.') }
+      it { expect(flash[:notice]).to eq(I18n.t('home.subscriber_created_success_confirm_email_message')) }
     end
 
     context 'Invalid data' do

@@ -20,7 +20,7 @@ class SubscribersController < ApplicationController
 
     respond_to do |format|
       if create_resp.success?
-        format.html { redirect_to subscriber_url(@subscriber), notice: create_resp.message }
+        format.html { redirect_to subscribers_path, notice: create_resp.message }
       else
         format.html { render :new, status: :unprocessable_entity }
       end

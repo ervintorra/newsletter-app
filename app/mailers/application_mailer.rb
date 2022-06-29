@@ -1,5 +1,5 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'torraervin@gmail.com'
+  default from: Rails.application.credentials.EMAIL_ADDRESS
   layout 'mailer'
 
   def self.deliver(email, wait_seconds = 0.seconds)
