@@ -14,7 +14,7 @@ module JobServices
       return success_response if @newsletters_to_be_scheduled.empty?
 
       display_logs
-      scheduler = TimeScheduler.new(@newsletters_to_be_scheduled[0].publish_at, @newsletters_to_be_scheduled[0].publish_at)
+      scheduler = initialize_scheduler
 
       @newsletters_to_be_scheduled.each do |newsletter|
         scheduler.increment_end_time_on_new_time(newsletter.publish_at)
@@ -29,6 +29,7 @@ module JobServices
         newsletter.schedule
       end
 
+      set_end_time_to_redis(scheduler.end_time)
       success_response
     rescue StandardError => e
       Rails.logger.error "Failed to schedule newsletters: #{e.message}"
@@ -36,6 +37,23 @@ module JobServices
     end
 
     private
+
+    def initialize_scheduler
+      end_time_from_redis = Rails.cache.redis.get('time_scheduler_end_time')
+      first_newsletter_publish_at = @newsletters_to_be_scheduled[0].publish_at
+
+      end_time = if end_time_from_redis.present?
+                   first_newsletter_publish_at.to_s < end_time_from_redis ? end_time_from_redis : first_newsletter_publish_at
+                 else
+                   first_newsletter_publish_at
+                 end
+
+      TimeScheduler.new(end_time, end_time)
+    end
+
+    def set_end_time_to_redis(end_time)
+      Rails.cache.redis.set('time_scheduler_end_time', end_time.to_s, ex: 1.hour)
+    end
 
     def display_logs
       subscribers = Subscriber.count
